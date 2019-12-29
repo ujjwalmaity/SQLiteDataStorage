@@ -1,7 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="5dp">
 
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/qr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="QR CODE ID"
+            android:inputType="text"
+            android:textColor="@color/colorEditText" />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="NAME"
+            android:inputType="textPersonName"
+            android:textColor="@color/colorEditText" />
+
+        <EditText
+            android:id="@+id/batch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="BATCH"
+            android:inputType="text"
+            android:textColor="@color/colorEditText" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignParentEnd="true"
+        android:text="CREATE"
+        android:textColor="@color/colorButton" />
+
+    <Button
+        android:id="@+id/read"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/create"
+        android:layout_alignParentEnd="true"
+        android:text="READ"
+        android:textColor="@color/colorButton" />
+
+    <EditText
+        android:id="@+id/id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/read"
+        android:hint="ID"
+        android:inputType="number"
+        android:textColor="@color/colorEditText" />
+
+    <EditText
+        android:id="@+id/batch2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id"
+        android:hint="BATCH"
+        android:inputType="text"
+        android:textColor="@color/colorEditText" />
+
+    <Button
+        android:id="@+id/update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/batch2"
+        android:layout_alignParentEnd="true"
+        android:text="UPDATE"
+        android:textColor="@color/colorButton" />
+
+    <EditText
+        android:id="@+id/id2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/update"
+        android:hint="ID"
+        android:inputType="number"
+        android:textColor="@color/colorEditText" />
+
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id2"
+        android:layout_alignParentEnd="true"
+        android:text="DELETE"
+        android:textColor="@color/colorButton" />
 </RelativeLayout>
