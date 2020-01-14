@@ -8,8 +8,11 @@ import android.view.View;
 import android.widget.Toast;
 import android.widget.EditText;
 import android.database.Cursor;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 
 import dev.ujjwal.sqlitedatastorage.data.StudentDbHelper;
+import dev.ujjwal.sqlitedatastorage.data.StudentContract.StudentEntry;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,17 +46,24 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                boolean isCreate = studentDbHelper.create(
-                        qr.getText().toString(),
-                        name.getText().toString(),
-                        batch.getText().toString());
-                if (isCreate) {
+                StudentDbHelper studentDbHelper = new StudentDbHelper(getApplicationContext());
+
+                SQLiteDatabase db = studentDbHelper.getWritableDatabase();
+
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(StudentEntry.COLUMN_QR_CODE_ID, qr.getText().toString().trim());
+                contentValues.put(StudentEntry.COLUMN_NAME, name.getText().toString().trim());
+                contentValues.put(StudentEntry.COLUMN_BATCH, batch.getText().toString().trim());
+
+                long result = db.insert(StudentEntry.TABLE_NAME, null, contentValues);
+
+                if (result == -1) {
+                    Toast.makeText(getApplicationContext(), "Data not Insert", Toast.LENGTH_LONG).show();
+                } else {
                     Toast.makeText(getApplicationContext(), "Data Inserted", Toast.LENGTH_LONG).show();
                     qr.setText("");
                     name.setText("");
                     batch.setText("");
-                } else {
-                    Toast.makeText(getApplicationContext(), "Data not Insert", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -62,7 +72,19 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.read).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cursor cursor = studentDbHelper.read();
+                StudentDbHelper studentDbHelper = new StudentDbHelper(getApplicationContext());
+
+                SQLiteDatabase db = studentDbHelper.getReadableDatabase();
+
+                String[] projection = {StudentEntry._ID,
+                        StudentEntry.COLUMN_QR_CODE_ID,
+                        StudentEntry.COLUMN_NAME,
+                        StudentEntry.COLUMN_BATCH};
+                Cursor cursor = db.query(StudentEntry.TABLE_NAME, projection,
+                        null, null,
+                        null, null, null);
+
+//                Cursor cursor = db.rawQuery("SELECT * FROM " + StudentEntry.TABLE_NAME, null);
 
                 if (cursor.getCount() == 0) {
                     showMessage("Error 404", "No Record found");
@@ -77,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
                     buffer.append("BATCH: " + cursor.getString(3) + "\n\n");
                 }
                 showMessage("Data", buffer.toString());
+
+                cursor.close();
             }
         });
 
@@ -89,10 +113,13 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                boolean isUpdate = studentDbHelper.update(
-                        id.getText().toString(),
-                        batch2.getText().toString());
-                if (isUpdate) {
+                StudentDbHelper studentDbHelper = new StudentDbHelper(getApplicationContext());
+                SQLiteDatabase db = studentDbHelper.getWritableDatabase();
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(StudentEntry.COLUMN_BATCH, batch2.getText().toString().trim());
+                int result = db.update(StudentEntry.TABLE_NAME, contentValues, "_ID = ?", new String[]{id.getText().toString().trim()});
+
+                if (result > 0) {
                     Toast.makeText(getApplicationContext(), "Data Updated", Toast.LENGTH_LONG).show();
                     id.setText("");
                     batch2.setText("");
@@ -111,8 +138,11 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                boolean isDelete = studentDbHelper.delete(id2.getText().toString());
-                if (isDelete) {
+                StudentDbHelper studentDbHelper = new StudentDbHelper(getApplicationContext());
+                SQLiteDatabase db = studentDbHelper.getWritableDatabase();
+                int result = db.delete(StudentEntry.TABLE_NAME, "_ID = ?", new String[]{id2.getText().toString()});
+
+                if (result > 0) {
                     Toast.makeText(MainActivity.this, "Data Deleted", Toast.LENGTH_LONG).show();
                     id2.setText("");
                 } else {
