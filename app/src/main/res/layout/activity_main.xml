@@ -106,4 +106,13 @@
         android:layout_centerHorizontal="true"
         android:text="ATTENDANCE"
         android:textColor="@color/colorButton" />
+
+    <Button
+        android:id="@+id/export"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/attendance"
+        android:layout_centerHorizontal="true"
+        android:text="EXPORT"
+        android:textColor="@color/colorButton" />
 </RelativeLayout>

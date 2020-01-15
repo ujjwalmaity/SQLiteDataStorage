@@ -5,12 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Toast;
 import android.widget.EditText;
 import android.database.Cursor;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
 
 import dev.ujjwal.sqlitedatastorage.data.StudentDbHelper;
 import dev.ujjwal.sqlitedatastorage.data.StudentContract.StudentEntry;
@@ -152,11 +159,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //MAKE ATTENDANCE
         findViewById(R.id.attendance).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AttendanceActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        //EXPORT DB TO EXTERNAL STORAGE
+        findViewById(R.id.export).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File data = Environment.getDataDirectory();
+//                File sd = Environment.getExternalStorageDirectory();
+                File sd = getExternalFilesDir("student_attendance");
+                String currentDBPath = "/data/" + getPackageName() + "/databases/" + "studentAttendance.db";
+                String backupDBPath = "studentAttendance.db";
+                File currentDB = new File(data, currentDBPath);
+                File backupDB = new File(sd, backupDBPath);
+                FileChannel source = null;
+                FileChannel destination = null;
+                try {
+                    source = new FileInputStream(currentDB).getChannel();
+                    destination = new FileOutputStream(backupDB).getChannel();
+                    destination.transferFrom(source, 0, source.size());
+                    source.close();
+                    destination.close();
+                    Toast.makeText(getApplicationContext(), "DB Exported!", Toast.LENGTH_LONG).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "DB Not Export!", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
