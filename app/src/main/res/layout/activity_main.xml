@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:padding="5dp">
 
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -97,5 +96,14 @@
         android:layout_below="@id/id2"
         android:layout_alignParentEnd="true"
         android:text="DELETE"
+        android:textColor="@color/colorButton" />
+
+    <Button
+        android:id="@+id/attendance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/delete"
+        android:layout_centerHorizontal="true"
+        android:text="ATTENDANCE"
         android:textColor="@color/colorButton" />
 </RelativeLayout>
