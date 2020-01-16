@@ -1,5 +1,6 @@
 package dev.ujjwal.sqlitedatastorage.recycler;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +14,13 @@ import dev.ujjwal.sqlitedatastorage.AttendanceActivity;
 
 public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceHolder> {
 
+    private Context context;
     private Integer[] id;
     private String[] name;
     private Integer[] attendance;
-    private AttendanceActivity attendanceActivity;
 
-    public AttendanceAdapter(AttendanceActivity attendanceActivity, Integer[] id, String[] name, Integer[] attendance) {
-        this.attendanceActivity = attendanceActivity;
+    public AttendanceAdapter(Context context, Integer[] id, String[] name, Integer[] attendance) {
+        this.context = context;
         this.id = id;
         this.name = name;
         this.attendance = attendance;
@@ -57,9 +58,9 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceHolder> {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked)
-                    attendanceActivity.makeAttendance(id[position], 1);
+                    AttendanceActivity.makeAttendance(context, id[position], 1);
                 else
-                    attendanceActivity.makeAttendance(id[position], 0);
+                    AttendanceActivity.makeAttendance(context, id[position], 0);
             }
         });
     }

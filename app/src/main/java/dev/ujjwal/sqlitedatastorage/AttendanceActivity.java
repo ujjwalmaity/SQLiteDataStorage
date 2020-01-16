@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -128,10 +129,10 @@ public class AttendanceActivity extends AppCompatActivity {
         recyclerView.setAdapter(attendanceAdapter);
     }
 
-    public void makeAttendance(Integer id, Integer attendance) {
+    public static void makeAttendance(Context context, Integer id, Integer attendance) {
         String timeStamp = new SimpleDateFormat("_dd_MM_yyyy").format(new Date());
 
-        StudentDbHelper studentDbHelper = new StudentDbHelper(this);
+        StudentDbHelper studentDbHelper = new StudentDbHelper(context);
         SQLiteDatabase db = studentDbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(timeStamp, attendance);
