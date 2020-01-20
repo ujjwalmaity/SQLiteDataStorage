@@ -8,7 +8,7 @@ import dev.ujjwal.sqlitedatastorage.data.StudentContract.StudentEntry;
 
 public class StudentDbHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "studentAttendance.db";
+    public static final String DATABASE_NAME = "StudentAttendance.db";
     private static final int DATABASE_VERSION = 1;
 
     private static final String SQL_CREATE_ENTRIES = "CREATE TABLE " + StudentEntry.TABLE_NAME + " ("

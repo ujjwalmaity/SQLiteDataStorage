@@ -129,7 +129,7 @@ public class AttendanceActivity extends AppCompatActivity {
         recyclerView.setAdapter(attendanceAdapter);
     }
 
-    public static void makeAttendance(Context context, Integer id, Integer attendance) {
+    public void makeAttendance(Context context, Integer id, Integer attendance) {
         String timeStamp = new SimpleDateFormat("_dd_MM_yyyy").format(new Date());
 
         StudentDbHelper studentDbHelper = new StudentDbHelper(context);

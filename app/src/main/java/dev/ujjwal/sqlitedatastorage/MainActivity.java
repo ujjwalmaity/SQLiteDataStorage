@@ -175,8 +175,8 @@ public class MainActivity extends AppCompatActivity {
                 File data = Environment.getDataDirectory();
 //                File sd = Environment.getExternalStorageDirectory();
                 File sd = getExternalFilesDir("student_attendance");
-                String currentDBPath = "/data/" + getPackageName() + "/databases/" + "studentAttendance.db";
-                String backupDBPath = "studentAttendance.db";
+                String currentDBPath = "/data/" + getPackageName() + "/databases/" + StudentDbHelper.DATABASE_NAME;
+                String backupDBPath = StudentDbHelper.DATABASE_NAME;
                 File currentDB = new File(data, currentDBPath);
                 File backupDB = new File(sd, backupDBPath);
                 FileChannel source = null;

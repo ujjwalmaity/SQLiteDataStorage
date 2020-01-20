@@ -58,9 +58,9 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceHolder> {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked)
-                    AttendanceActivity.makeAttendance(context, id[position], 1);
+                    ((AttendanceActivity) context).makeAttendance(context, id[position], 1);
                 else
-                    AttendanceActivity.makeAttendance(context, id[position], 0);
+                    ((AttendanceActivity) context).makeAttendance(context, id[position], 0);
             }
         });
     }
