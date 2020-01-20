@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,20 +46,29 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceHolder> {
         holder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (holder.checkBox.isChecked())
+                if (holder.checkBox.isChecked()) {
                     holder.checkBox.setChecked(false);
-                else
+                    ((AttendanceActivity) context).makeAttendance(context, id[position], 0);
+                    attendance[position] = 0;
+                } else {
                     holder.checkBox.setChecked(true);
+                    ((AttendanceActivity) context).makeAttendance(context, id[position], 1);
+                    attendance[position] = 1;
 
+                }
             }
         });
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
+            public void onClick(View view) {
+                if (holder.checkBox.isChecked()) {
                     ((AttendanceActivity) context).makeAttendance(context, id[position], 1);
-                else
+                    attendance[position] = 1;
+                } else {
                     ((AttendanceActivity) context).makeAttendance(context, id[position], 0);
+                    attendance[position] = 0;
+                }
             }
         });
     }
