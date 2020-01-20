@@ -23,6 +23,11 @@
         </activity>
 
         <activity android:name=".AttendanceActivity" />
+
+        <provider
+            android:name=".data.StudentProvider"
+            android:authorities="dev.ujjwal.sqlitedatastorage"
+            android:exported="false" />
     </application>
 
 </manifest>
