@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -54,21 +55,32 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                StudentDbHelper studentDbHelper = new StudentDbHelper(getApplicationContext());
+//                StudentDbHelper studentDbHelper = new StudentDbHelper(getApplicationContext());
 
-                SQLiteDatabase db = studentDbHelper.getWritableDatabase();
+//                SQLiteDatabase db = studentDbHelper.getWritableDatabase();
 
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(StudentEntry.COLUMN_QR_CODE_ID, qr.getText().toString().trim());
                 contentValues.put(StudentEntry.COLUMN_NAME, name.getText().toString().trim());
                 contentValues.put(StudentEntry.COLUMN_BATCH, batch.getText().toString().trim());
 
-                long result = db.insert(StudentEntry.TABLE_NAME, null, contentValues);
+//                long result = db.insert(StudentEntry.TABLE_NAME, null, contentValues);
+//
+//                if (result == -1) {
+//                    Toast.makeText(getApplicationContext(), "Data not Insert", Toast.LENGTH_LONG).show();
+//                } else {
+//                    Toast.makeText(getApplicationContext(), "Data Inserted", Toast.LENGTH_LONG).show();
+//                    qr.setText("");
+//                    name.setText("");
+//                    batch.setText("");
+//                }
 
-                if (result == -1) {
-                    Toast.makeText(getApplicationContext(), "Data not Insert", Toast.LENGTH_LONG).show();
+                Uri newUri = getContentResolver().insert(StudentEntry.CONTENT_URI, contentValues);
+
+                if (newUri == null) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.editor_insert_student_failed), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Data Inserted", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.editor_insert_student_successful), Toast.LENGTH_SHORT).show();
                     qr.setText("");
                     name.setText("");
                     batch.setText("");
@@ -80,19 +92,21 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.read).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StudentDbHelper studentDbHelper = new StudentDbHelper(getApplicationContext());
+//                StudentDbHelper studentDbHelper = new StudentDbHelper(getApplicationContext());
 
-                SQLiteDatabase db = studentDbHelper.getReadableDatabase();
+//                SQLiteDatabase db = studentDbHelper.getReadableDatabase();
 
                 String[] projection = {StudentEntry._ID,
                         StudentEntry.COLUMN_QR_CODE_ID,
                         StudentEntry.COLUMN_NAME,
                         StudentEntry.COLUMN_BATCH};
-                Cursor cursor = db.query(StudentEntry.TABLE_NAME, projection,
-                        null, null,
-                        null, null, null);
+//                Cursor cursor = db.query(StudentEntry.TABLE_NAME, projection,
+//                        null, null,
+//                        null, null, null);
 
 //                Cursor cursor = db.rawQuery("SELECT * FROM " + StudentEntry.TABLE_NAME, null);
+
+                Cursor cursor = getContentResolver().query(StudentEntry.CONTENT_URI, projection, null, null, null);
 
                 if (cursor.getCount() == 0) {
                     showMessage("Error 404", "No Record found");

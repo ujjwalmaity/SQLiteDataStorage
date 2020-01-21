@@ -1,23 +1,38 @@
 package dev.ujjwal.sqlitedatastorage.data;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import dev.ujjwal.sqlitedatastorage.data.StudentContract.StudentEntry;
+
 public class StudentProvider extends ContentProvider {
+
+    private StudentDbHelper studentDbHelper;
+
+    private static final int STUDENTS = 100;
+    private static final int STUDENTS_ID = 101;
+
+    private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
+
+    static {
+        URI_MATCHER.addURI(StudentContract.CONTENT_AUTHORITY, StudentContract.PATH_STUDENTS, STUDENTS);
+        URI_MATCHER.addURI(StudentContract.CONTENT_AUTHORITY, StudentContract.PATH_STUDENTS + "/#", STUDENTS_ID);
+    }
 
     /**
      * Initialize the provider and the database helper object.
      */
     @Override
     public boolean onCreate() {
-        // TODO: Create and initialize a PetDbHelper object to gain access to the pets database.
-        // Make sure the variable is a global variable, so it can be referenced from other
-        // ContentProvider methods.
+        studentDbHelper = new StudentDbHelper(getContext());
         return true;
     }
 
@@ -27,7 +42,26 @@ public class StudentProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        return null;
+        SQLiteDatabase sqLiteDatabase = studentDbHelper.getReadableDatabase();
+
+        Cursor cursor;
+
+        int match = URI_MATCHER.match(uri);
+
+        switch (match) {
+            case STUDENTS:
+                cursor = sqLiteDatabase.query(StudentEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            case STUDENTS_ID:
+                selection = StudentEntry._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                cursor = sqLiteDatabase.query(StudentEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            default:
+                throw new IllegalArgumentException("Can not query unknown URI " + uri);
+        }
+
+        return cursor;
     }
 
     /**
@@ -36,7 +70,25 @@ public class StudentProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
-        return null;
+        SQLiteDatabase sqLiteDatabase = studentDbHelper.getWritableDatabase();
+
+        Uri newUri;
+
+        int match = URI_MATCHER.match(uri);
+
+        switch (match) {
+            case STUDENTS:
+                long id = sqLiteDatabase.insert(StudentEntry.TABLE_NAME, null, values);
+                if (id == -1) {
+                    return null;
+                }
+                newUri = ContentUris.withAppendedId(uri, id);
+                break;
+            default:
+                throw new IllegalArgumentException("Insertion is not supported for " + uri);
+        }
+
+        return newUri;
     }
 
     /**
