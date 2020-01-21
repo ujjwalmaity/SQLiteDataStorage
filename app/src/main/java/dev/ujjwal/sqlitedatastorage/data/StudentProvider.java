@@ -70,6 +70,16 @@ public class StudentProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
+        String qr_id = values.getAsString(StudentEntry.COLUMN_QR_CODE_ID);
+        if (qr_id == null) {
+            throw new IllegalArgumentException("Student requires QR Code Id");
+        }
+
+        String name = values.getAsString(StudentEntry.COLUMN_NAME);
+        if (name == null) {
+            throw new IllegalArgumentException("Student requires a name");
+        }
+
         SQLiteDatabase sqLiteDatabase = studentDbHelper.getWritableDatabase();
 
         Uri newUri;
