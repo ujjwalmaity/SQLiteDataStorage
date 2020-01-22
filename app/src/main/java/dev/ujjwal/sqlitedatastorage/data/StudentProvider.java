@@ -172,6 +172,15 @@ public class StudentProvider extends ContentProvider {
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {
-        return null;
+        final int match = URI_MATCHER.match(uri);
+
+        switch (match) {
+            case STUDENTS:
+                return StudentEntry.CONTENT_LIST_TYPE;
+            case STUDENTS_ID:
+                return StudentEntry.CONTENT_ITEM_TYPE;
+            default:
+                throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
+        }
     }
 }
