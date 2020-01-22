@@ -106,7 +106,37 @@ public class StudentProvider extends ContentProvider {
      */
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+        if (values.containsKey(StudentEntry.COLUMN_BATCH)) {
+            String batch = values.getAsString(StudentEntry.COLUMN_BATCH);
+            if (batch == null) {
+                throw new IllegalArgumentException("Student requires batch");
+            }
+        }
+
+        if (values.size() == 0) {
+            return 0;
+        }
+
+        SQLiteDatabase sqLiteDatabase = studentDbHelper.getWritableDatabase();
+
+        int result;
+
+        final int match = URI_MATCHER.match(uri);
+
+        switch (match) {
+            case STUDENTS:
+                result = sqLiteDatabase.update(StudentEntry.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            case STUDENTS_ID:
+                selection = StudentEntry._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                result = sqLiteDatabase.update(StudentEntry.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Update is not supported for " + uri);
+        }
+
+        return result;
     }
 
     /**
@@ -114,7 +144,26 @@ public class StudentProvider extends ContentProvider {
      */
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+        SQLiteDatabase sqLiteDatabase = studentDbHelper.getWritableDatabase();
+
+        int result;
+
+        final int match = URI_MATCHER.match(uri);
+
+        switch (match) {
+            case STUDENTS:
+                result = sqLiteDatabase.delete(StudentEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            case STUDENTS_ID:
+                selection = StudentEntry._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                result = sqLiteDatabase.delete(StudentEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Deletion is not supported for " + uri);
+        }
+
+        return result;
     }
 
     /**

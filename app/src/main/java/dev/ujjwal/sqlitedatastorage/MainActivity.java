@@ -135,11 +135,12 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                StudentDbHelper studentDbHelper = new StudentDbHelper(getApplicationContext());
-                SQLiteDatabase db = studentDbHelper.getWritableDatabase();
+//                StudentDbHelper studentDbHelper = new StudentDbHelper(getApplicationContext());
+//                SQLiteDatabase db = studentDbHelper.getWritableDatabase();
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(StudentEntry.COLUMN_BATCH, batch2.getText().toString().trim());
-                int result = db.update(StudentEntry.TABLE_NAME, contentValues, "_ID = ?", new String[]{id.getText().toString().trim()});
+//                int result = db.update(StudentEntry.TABLE_NAME, contentValues, "_ID = ?", new String[]{id.getText().toString().trim()});
+                int result = getContentResolver().update(StudentEntry.CONTENT_URI, contentValues, "_ID = ?", new String[]{id.getText().toString().trim()});
 
                 if (result > 0) {
                     Toast.makeText(getApplicationContext(), "Data Updated", Toast.LENGTH_LONG).show();
@@ -160,9 +161,10 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                StudentDbHelper studentDbHelper = new StudentDbHelper(getApplicationContext());
-                SQLiteDatabase db = studentDbHelper.getWritableDatabase();
-                int result = db.delete(StudentEntry.TABLE_NAME, "_ID = ?", new String[]{id2.getText().toString()});
+//                StudentDbHelper studentDbHelper = new StudentDbHelper(getApplicationContext());
+//                SQLiteDatabase db = studentDbHelper.getWritableDatabase();
+//                int result = db.delete(StudentEntry.TABLE_NAME, "_ID = ?", new String[]{id2.getText().toString()});
+                int result = getContentResolver().delete(StudentEntry.CONTENT_URI, "_ID = ?", new String[]{id2.getText().toString()});
 
                 if (result > 0) {
                     Toast.makeText(MainActivity.this, "Data Deleted", Toast.LENGTH_LONG).show();
