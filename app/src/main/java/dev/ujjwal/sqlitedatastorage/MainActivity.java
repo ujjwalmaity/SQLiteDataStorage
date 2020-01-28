@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.read).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+/*
 //                StudentDbHelper studentDbHelper = new StudentDbHelper(getApplicationContext());
 
 //                SQLiteDatabase db = studentDbHelper.getReadableDatabase();
@@ -123,6 +124,9 @@ public class MainActivity extends AppCompatActivity {
                 showMessage("Data", buffer.toString());
 
                 cursor.close();
+ */
+                Intent intent = new Intent(MainActivity.this, ShowActivity.class);
+                startActivity(intent);
             }
         });
 

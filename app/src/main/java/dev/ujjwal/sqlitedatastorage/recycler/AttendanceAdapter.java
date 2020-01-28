@@ -29,7 +29,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceHolder> {
     @Override
     public AttendanceHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.attendance_layout, parent, false);
+        View view = layoutInflater.inflate(R.layout.item_attendance, parent, false);
         return (new AttendanceHolder(view));
     }
 
