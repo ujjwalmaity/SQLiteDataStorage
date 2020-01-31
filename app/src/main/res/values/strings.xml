@@ -2,5 +2,5 @@
     <string name="app_name">SQLite Data Storage</string>
 
     <string name="editor_insert_student_failed">Data not Insert</string>
-    <string name="editor_insert_student_successful">Data Insert</string>
+    <string name="editor_insert_student_successful">Data Inserted</string>
 </resources>

@@ -16,9 +16,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import java.util.Date;
-import java.text.SimpleDateFormat;
-
 import dev.ujjwal.sqlitedatastorage.data.StudentDbHelper;
 import dev.ujjwal.sqlitedatastorage.recycler.AttendanceAdapter;
 import dev.ujjwal.sqlitedatastorage.data.StudentContract.StudentEntry;
@@ -44,8 +41,8 @@ public class AttendanceActivity extends AppCompatActivity {
     }
 
     private void init() {
-        spinner = findViewById(R.id.spinner);
-        recyclerView = findViewById(R.id.recycler_view);
+        spinner = findViewById(R.id.activity_attendance_spinner);
+        recyclerView = findViewById(R.id.activity_attendance_recyclerView);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
@@ -92,11 +89,10 @@ public class AttendanceActivity extends AppCompatActivity {
         SQLiteDatabase db = studentDbHelper.getReadableDatabase();
 
         String date = preferences.getString("date", "");
-        String timeStamp = new SimpleDateFormat("_dd_MM_yyyy").format(new Date());
-        if (!date.equals(timeStamp)) {
-            db.execSQL("ALTER TABLE " + StudentEntry.TABLE_NAME + " ADD COLUMN " + timeStamp + " INTEGER DEFAULT 0");
+        if (!date.equals(StudentEntry.COLUMN_TIMESTAMP)) {
+            db.execSQL("ALTER TABLE " + StudentEntry.TABLE_NAME + " ADD COLUMN " + StudentEntry.COLUMN_TIMESTAMP + " INTEGER DEFAULT 0");
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("date", timeStamp);
+            editor.putString("date", StudentEntry.COLUMN_TIMESTAMP);
             editor.apply();
         }
 
@@ -104,7 +100,7 @@ public class AttendanceActivity extends AppCompatActivity {
                 StudentEntry._ID,
                 StudentEntry.COLUMN_NAME,
                 StudentEntry.COLUMN_BATCH,
-                timeStamp};
+                StudentEntry.COLUMN_TIMESTAMP};
         String selection = StudentEntry.COLUMN_BATCH + "=?";
         String[] selectionArgs = {selectedSection};
         Cursor cursor = db.query(StudentEntry.TABLE_NAME, projection,
@@ -130,12 +126,10 @@ public class AttendanceActivity extends AppCompatActivity {
     }
 
     public void makeAttendance(Context context, Integer id, Integer attendance) {
-        String timeStamp = new SimpleDateFormat("_dd_MM_yyyy").format(new Date());
-
         StudentDbHelper studentDbHelper = new StudentDbHelper(context);
         SQLiteDatabase db = studentDbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(timeStamp, attendance);
+        contentValues.put(StudentEntry.COLUMN_TIMESTAMP, attendance);
         db.update(StudentEntry.TABLE_NAME, contentValues, "_ID = ?", new String[]{id.toString()});
     }
 }

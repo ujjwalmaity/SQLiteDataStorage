@@ -21,22 +21,18 @@ public class StudentCursorAdapter extends CursorAdapter {
         return LayoutInflater.from(context).inflate(R.layout.item_show, parent, false);
     }
 
-
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView nameTextView = view.findViewById(R.id.name_item_show);
-        TextView summaryTextView = view.findViewById(R.id.batch_item_show);
+        TextView nameTextView = view.findViewById(R.id.item_show_name);
+        TextView batchTextView = view.findViewById(R.id.item_show_batch);
 
-        // Find the columns of pet attributes that we're interested in
         int nameColumnIndex = cursor.getColumnIndex(StudentEntry.COLUMN_NAME);
-        int breedColumnIndex = cursor.getColumnIndex(StudentEntry.COLUMN_BATCH);
+        int batchColumnIndex = cursor.getColumnIndex(StudentEntry.COLUMN_BATCH);
 
-        // Read the pet attributes from the Cursor for the current pet
-        String petName = cursor.getString(nameColumnIndex);
-        String petBreed = cursor.getString(breedColumnIndex);
+        String studentName = cursor.getString(nameColumnIndex);
+        String studentBatch = cursor.getString(batchColumnIndex);
 
-        // Update the TextViews with the attributes for the current pet
-        nameTextView.setText(petName);
-        summaryTextView.setText(petBreed);
+        nameTextView.setText(studentName);
+        batchTextView.setText(studentBatch);
     }
 }

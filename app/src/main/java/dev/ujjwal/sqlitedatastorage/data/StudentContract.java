@@ -4,6 +4,9 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.content.ContentResolver;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
 public final class StudentContract {
 
     public static final String CONTENT_AUTHORITY = "dev.ujjwal.sqlitedatastorage";
@@ -19,9 +22,9 @@ public final class StudentContract {
 
         public final static String _ID = BaseColumns._ID;
 
-        public final static String COLUMN_QR_CODE_ID = "qr";
         public final static String COLUMN_NAME = "name";
         public final static String COLUMN_BATCH = "batch";
+        public final static String COLUMN_TIMESTAMP = new SimpleDateFormat("_dd_MM_yyyy").format(new Date());
 
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_STUDENTS);
 

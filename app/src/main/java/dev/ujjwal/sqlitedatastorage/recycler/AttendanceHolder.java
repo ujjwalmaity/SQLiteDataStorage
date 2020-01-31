@@ -11,13 +11,13 @@ import dev.ujjwal.sqlitedatastorage.R;
 
 class AttendanceHolder extends RecyclerView.ViewHolder {
 
-    TextView textView;
+    TextView name;
     CheckBox checkBox;
 
     AttendanceHolder(@NonNull final View itemView) {
         super(itemView);
 
-        textView = itemView.findViewById(R.id.attendance_layout_tv);
-        checkBox = itemView.findViewById(R.id.attendance_layout_checkBox);
+        name = itemView.findViewById(R.id.item_attendance_name);
+        checkBox = itemView.findViewById(R.id.item_attendance_checkBox);
     }
 }

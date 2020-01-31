@@ -36,14 +36,14 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceHolder> {
     @Override
     public void onBindViewHolder(@NonNull final AttendanceHolder holder, final int position) {
         String text = name[position];
-        holder.textView.setText(text);
+        holder.name.setText(text);
         holder.checkBox.setText(id[position] + "");
         if (attendance[position].equals(0))
             holder.checkBox.setChecked(false);
         else if (attendance[position].equals(1))
             holder.checkBox.setChecked(true);
 
-        holder.textView.setOnClickListener(new View.OnClickListener() {
+        holder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (holder.checkBox.isChecked()) {

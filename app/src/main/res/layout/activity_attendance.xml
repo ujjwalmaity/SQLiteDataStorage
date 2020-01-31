@@ -6,7 +6,7 @@
     tools:context=".AttendanceActivity">
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/activity_attendance_spinner"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:visibility="invisible" />
@@ -15,11 +15,11 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_alignBottom="@+id/spinner"
+        android:layout_alignBottom="@+id/activity_attendance_spinner"
         android:background="@color/colorAccent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        android:id="@+id/activity_attendance_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/view" />

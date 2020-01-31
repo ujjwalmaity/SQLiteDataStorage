@@ -5,17 +5,17 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/attendance_layout_tv"
+        android:id="@+id/item_attendance_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toStartOf="@+id/attendance_layout_checkBox"
+        android:layout_toStartOf="@+id/item_attendance_checkBox"
         android:padding="15dp"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
         tools:text="Name" />
 
     <CheckBox
-        android:id="@+id/attendance_layout_checkBox"
+        android:id="@+id/item_attendance_checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -25,6 +25,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_alignBottom="@+id/attendance_layout_tv"
+        android:layout_alignBottom="@+id/item_attendance_name"
         android:background="#1A000000" />
 </RelativeLayout>

@@ -11,14 +11,6 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/qr"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="QR CODE ID"
-            android:inputType="text"
-            android:textColor="@color/colorEditText" />
-
-        <EditText
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -104,15 +96,24 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/delete"
         android:layout_centerHorizontal="true"
-        android:text="ATTENDANCE"
+        android:text="MAKE  ATTENDANCE"
+        android:textColor="@color/colorButton" />
+
+    <Button
+        android:id="@+id/show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/attendance"
+        android:layout_centerHorizontal="true"
+        android:text="SHOW  DB"
         android:textColor="@color/colorButton" />
 
     <Button
         android:id="@+id/export"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/attendance"
+        android:layout_below="@id/show"
         android:layout_centerHorizontal="true"
-        android:text="EXPORT"
+        android:text="EXPORT  DB"
         android:textColor="@color/colorButton" />
 </RelativeLayout>

@@ -70,13 +70,8 @@ public class StudentProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
-        String qr_id = values.getAsString(StudentEntry.COLUMN_QR_CODE_ID);
-        if (qr_id == null) {
-            throw new IllegalArgumentException("Student requires QR Code Id");
-        }
-
         String name = values.getAsString(StudentEntry.COLUMN_NAME);
-        if (name == null) {
+        if (name == null || name.equals("")) {
             throw new IllegalArgumentException("Student requires a name");
         }
 
@@ -108,7 +103,7 @@ public class StudentProvider extends ContentProvider {
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
         if (values.containsKey(StudentEntry.COLUMN_BATCH)) {
             String batch = values.getAsString(StudentEntry.COLUMN_BATCH);
-            if (batch == null) {
+            if (batch == null || batch.equals("")) {
                 throw new IllegalArgumentException("Student requires batch");
             }
         }

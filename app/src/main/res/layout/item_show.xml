@@ -6,7 +6,7 @@
     android:padding="5dp">
 
     <TextView
-        android:id="@+id/name_item_show"
+        android:id="@+id/item_show_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
@@ -14,7 +14,7 @@
         android:textColor="#2B3D4D" />
 
     <TextView
-        android:id="@+id/batch_item_show"
+        android:id="@+id/item_show_batch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"

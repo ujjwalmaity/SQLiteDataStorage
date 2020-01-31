@@ -16,7 +16,6 @@ public class ShowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show);
 
         String[] projection = {StudentEntry._ID,
-                StudentEntry.COLUMN_QR_CODE_ID,
                 StudentEntry.COLUMN_NAME,
                 StudentEntry.COLUMN_BATCH};
         Cursor cursor = getContentResolver().query(
