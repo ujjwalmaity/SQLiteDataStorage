@@ -4,9 +4,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Toast;
 import android.widget.EditText;
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     EditText id, batch2;
     EditText id2;
 
+    SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +42,24 @@ public class MainActivity extends AppCompatActivity {
         id = findViewById(R.id.id);
         batch2 = findViewById(R.id.batch2);
         id2 = findViewById(R.id.id2);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        boolean isSampleDataInserted = preferences.getBoolean("isSampleDataInserted", false);
+        if (!isSampleDataInserted) {
+            String[] names = {"Mike", "Avi", "Will", "Nish", "Abhi", "Ved", "Neel", "Krish", "Leo", "Siddy", "Rob", "Monu", "Shau", "Rey", "Eddie", "Dave"};
+            String[] batches = {"Sec A", "Group 1", "Sec B", "Batch 1", "Sec B", "Batch 1", "Sec A", "Group 1", "Batch 1", "Sec B", "Batch 1", "Sec A", "Batch 1", "Sec A", "Group 1", "Sec B"};
+            int i = 0;
+            for (String str : names) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(StudentEntry.COLUMN_NAME, str);
+                contentValues.put(StudentEntry.COLUMN_BATCH, batches[i++]);
+                getContentResolver().insert(StudentEntry.CONTENT_URI, contentValues);
+            }
+
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("isSampleDataInserted", true);
+            editor.apply();
+        }
 
 
         //CREATE
