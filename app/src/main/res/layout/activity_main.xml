@@ -36,20 +36,34 @@
         android:text="CREATE"
         android:textColor="@color/colorButton" />
 
-    <Button
-        android:id="@+id/read"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/create"
-        android:layout_alignParentEnd="true"
-        android:text="READ"
-        android:textColor="@color/colorButton" />
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SHOW"
+            android:textColor="@color/colorButton" />
+
+        <Button
+            android:id="@+id/read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="READ"
+            android:textColor="@color/colorButton" />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/read"
+        android:layout_below="@+id/linearLayout2"
         android:hint="ID"
         android:inputType="number"
         android:textColor="@color/colorEditText" />
@@ -100,19 +114,10 @@
         android:textColor="@color/colorButton" />
 
     <Button
-        android:id="@+id/show"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/attendance"
-        android:layout_centerHorizontal="true"
-        android:text="SHOW  DB"
-        android:textColor="@color/colorButton" />
-
-    <Button
         android:id="@+id/export"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/show"
+        android:layout_below="@id/attendance"
         android:layout_centerHorizontal="true"
         android:text="EXPORT  DB"
         android:textColor="@color/colorButton" />
